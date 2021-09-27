@@ -11,11 +11,12 @@ import {
     Header,
     HeaderContent,
     ImageLogo,
-    TotalCars
+    TotalCars,
+    CarList
 } from './styles';
 
 export function Home(){
-  const carDataOne = {
+  const carData = {
     brand: 'audi',
     name: 'R$ 5 Coupé',
     rent: {
@@ -25,18 +26,6 @@ export function Home(){
     thumbnail: 'https://www.mazettoseguros.com.br/blog/wp-content/uploads/2019/10/seguro-para-audi-a3-700x301.png',
     
   }
-
-  const carDataTwo = {
-    brand: 'Porsche',
-    name: 'R$ 5 Panamera',
-    rent: {
-        period: 'AO DIA',
-        price: 340,
-    },
-    thumbnail: 'https://www.mazettoseguros.com.br/blog/wp-content/uploads/2019/10/seguro-panamera-corretora-de-seguros-700x350.png',
-    
-  }
-
   return(
     <Container>
       <StatusBar 
@@ -54,9 +43,11 @@ export function Home(){
             </TotalCars>
           </ HeaderContent>
         </Header>
-
-        <Car data={carDataOne}/>
-        <Car data={carDataTwo}/>
+      <CarList 
+        data={[1,2,3,4,5,6,7]}
+        keyExtractor={item => String(item)}
+        renderItem={({ item }) => <Car data={carData} />}
+      />
     </Container>
   );
 }
