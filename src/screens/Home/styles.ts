@@ -23,11 +23,6 @@ export const HeaderContent = styled.View`
   justify-content: space-between;
 `;
 
-export const ImageLogo = styled.Image`
-  width: ${RFValue(108)}px;
-  height:${RFValue(12)}px;
-`;
-
 export const TotalCars = styled.Text`
   font-size: ${RFValue(15)}px;
   font-family: ${({ theme }) => theme.fonts.primary_400};
