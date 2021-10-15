@@ -1,17 +1,13 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
+import { CarDTO } from '../../dtos/CarDTO';
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
 import { Accessory } from '../../components/Accessory';
 import { Button } from '../../components/Button';
 
-import speedSvg from '../../assets/speed.svg';
-import accelerationSvg from '../../assets/acceleration.svg';
-import forceSvg from '../../assets/force.svg';
-import gasolineSvg from '../../assets/gasoline.svg';
-import exchangeSvg from '../../assets/exchange.svg';
-import peopleSvg from '../../assets/people.svg';
+import { getAccessoryIcon } from '../../utils/getAccessoryIcon';
 
 import {
    Container,
@@ -30,52 +26,60 @@ import {
    Footer,
 } from './styles';
 
+interface Params {
+  car: CarDTO;
+}
+
 export function CarDetails(){
   const navigation = useNavigation();
+  const route = useRoute();
+  const { car } = route.params as Params;
 
   function handleConfirmRental(){
     navigation.navigate('Scheduling')
   }
 
+  function handleBack() {
+    navigation.goBack();
+  }
+
   return(
     <Container>
       <Header>
-        <BackButton onPress={() => {}} />
+        <BackButton onPress={handleBack} />
       </Header>
 
     <CarImages>
       <ImageSlider  
-        imagesUrl={['https://www.mazettoseguros.com.br/blog/wp-content/uploads/2019/10/seguro-para-audi-a3-700x301.png']}
+        imagesUrl={car.photos}
       />
     </CarImages>
 
     <Content>
       <Details>
         <Description>
-          <Brand>Lamborghuni</Brand>
-          <Name>Huracan</Name>
+          <Brand>{car.brand}</Brand>
+          <Name>{car.name}</Name>
         </Description>
 
         <Rent>
-          <Period>Ao dia</Period>
-          <Price>R$ 580</Price>
+          <Period>{car.rent.period}</Period>
+          <Price>R$ {car.rent.price}</Price>
         </Rent>
       </Details>
 
       <Accessories>
-         <Accessory name="380Km/h" icon={speedSvg}/>
-         <Accessory name="3.2s" icon={accelerationSvg}/>
-         <Accessory name="800 HP" icon={forceSvg}/>
-         <Accessory name="Gasoline" icon={gasolineSvg}/>
-         <Accessory name="Auto" icon={exchangeSvg}/>
-         <Accessory name="2 pessoas" icon={peopleSvg}/>
+        {
+          car.accessories.map(accessory => (
+          <Accessory 
+            key={accessory.type}
+            name={accessory.name}
+            icon={getAccessoryIcon(accessory.type)}/>
+         ))
+        }
       </Accessories>
 
-      <About>
-        Este é automóvel desportivo, bruwueoekel ajdklsakj djksa
-        ajsdklasfj ajskljkdslçf sajdfkslçjff jsadkfladçs jfdasklfj jsakdlf
-        asjfsdkf sadjfklsaçdf asdjfklaçdsf asdjfklçf
-      </About>
+      <About>{car.about}</About>
     </Content>
 
     <Footer>

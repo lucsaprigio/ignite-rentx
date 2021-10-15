@@ -23,18 +23,8 @@ export function Home(){
   const [loading, setLoading] = useState(true)
   const navigation = useNavigation();
 
-  const carData = {
-    brand: 'audi',
-    name: 'R$ 5 Coupé',
-    rent: {
-        period: 'AO DIA',
-        price: 120,
-    },
-    thumbnail: 'https://www.mazettoseguros.com.br/blog/wp-content/uploads/2019/10/seguro-para-audi-a3-700x301.png',
-  }
-
-  function handleCarDetails() {
-    navigation.navigate('CarDetails')
+  function handleCarDetails(car:CarDTO) {
+    navigation.navigate('CarDetails', { car })
   }
 
   useEffect(() => {
@@ -73,7 +63,7 @@ export function Home(){
         data={cars}
         keyExtractor={item => item.id}
         renderItem={({ item }) => 
-          <Car data={item} onPress={handleCarDetails}/>
+          <Car data={item} onPress={() => handleCarDetails(item)}/>
       }
       />
     }
