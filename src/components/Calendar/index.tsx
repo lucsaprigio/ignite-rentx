@@ -7,12 +7,12 @@ import { ptBR } from './localeConfig';
 
 import { 
     Calendar as CustomCalendar,
-    LocaleConfig,
     DateCallbackHandler,
+    LocaleConfig,
 } from 'react-native-calendars';
 
 LocaleConfig.locales['pt-br'] = ptBR;
-LocaleConfig.defaultLocale = 'pt-br'
+LocaleConfig.defaultLocale = 'pt-br';
 
 interface MarkedDateProps {
     [date: string]: {
