@@ -19,6 +19,8 @@ export const Container = styled(RectButton)<ButtonProps>`
 
   background-color: ${({ color }) => color};
   margin-top: 8px;
+
+  border-radius: 5px;
 `;
 
 export const Title = styled.Text<ButtonTextProps>`

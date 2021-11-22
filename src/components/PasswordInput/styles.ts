@@ -4,8 +4,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
     flex-direction: row;
-
-    margin-bottom: 8px;
+;
 `;
 
 export const IconContainer = styled.View`
@@ -19,7 +18,6 @@ export const IconContainer = styled.View`
 
 
     background-color: ${({ theme }) => theme.colors.background_secondary};
-    
 `
 
 export const InputText = styled(TextInput)`

@@ -4,7 +4,9 @@ import { Feather } from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
 
 import {
-   Container
+   Container,
+   InputText,
+   IconContainer
 } from './styles';
 
 /* Tipo do ícone */
@@ -14,17 +16,22 @@ interface Props extends TextInputProps {
 }
 
 export function Input({
-    iconName
+    iconName,
+    ...rest
 }: Props){
     const theme = useTheme();
 
   return(
     <Container>
+        <IconContainer>
         <Feather 
             name={iconName}
             size={24}
             color={theme.colors.text_detail}
         />
+        </IconContainer>
+        <InputText {...rest}/>
+
     </Container>
   );
 }
