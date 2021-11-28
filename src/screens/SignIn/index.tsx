@@ -1,5 +1,10 @@
-import React from 'react';
-import { StatusBar } from 'react-native';
+import React, { useState } from 'react';
+import { 
+  StatusBar,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
@@ -17,7 +22,12 @@ import {
 } from './styles';
 
 export function SignIn(){
+  const [email, setEmail] =  useState('');
+  const [password, setPassword] =  useState('');
+
   return(
+    <KeyboardAvoidingView  behavior="position" enabled>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
     <Container>
       <StatusBar  
         barStyle="dark-content" // Conteúdo da Barra de Status
@@ -41,11 +51,15 @@ export function SignIn(){
           keyboardType="email-address"
           autoCorrect={false}
           autoCapitalize="none"
+          onChangeText={setEmail}
+          value={email}
         />
 
         <PasswordInput 
           iconName="lock"
           placeholder="Senha"
+          onChangeText={setPassword}
+          value={password}
         />
       </Form>
 
@@ -69,5 +83,7 @@ export function SignIn(){
         />
       </Footer>
     </Container>
+    </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }

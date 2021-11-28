@@ -13,16 +13,31 @@ import {
 /* Tipo do ícone */
 interface Props extends TextInputProps {
     // Colocamos em colchetes para pegar o valor específico, nesse caso o name
-    iconName: React.ComponentProps<typeof Feather>['name'] 
+    iconName: React.ComponentProps<typeof Feather>['name']
+    value?: string;
 }
 
 export function PasswordInput({
     iconName,
+    value,
     ...rest
 }: Props){
     const [isPasswordVisible, setIsPasswordVisible] = useState(true);
+    const [isFocused, setIsFocused] = useState(false); // Saber se tem foco
+    const [isFilled, setIsFilled] = useState(false); // Saber se está preenchido
     
     const theme = useTheme();
+
+    /* Monitora se o usuário saiu do input ou não */
+    function handleInputFocus() { // Usuário entrou na caixa
+        setIsFocused(true);
+    }
+
+    function handleInputBlur() { // usuário saiu da caixa
+        setIsFocused(false);
+        setIsFilled(!!value) // O !! transforma o Valor em Lógico.
+    }
+
 
     /* Função de Ativação do Eye */
     function handlePasswordVisibilityChange() {
@@ -30,22 +45,26 @@ export function PasswordInput({
     }
 
   return(
-    <Container>
-        <IconContainer>
+    <Container >
+        <IconContainer isFocused={isFocused}>
         <Feather 
             name={iconName}
             size={24}
-            color={theme.colors.text_detail}
+            color={(isFocused || isFilled) ? theme.colors.main : theme.colors.text_detail}
+
         />
         </IconContainer>
         
         <InputText 
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
             secureTextEntry={isPasswordVisible}
+            isFocused={isFocused}
             {...rest}
         />
 
         <BorderlessButton onPress={handlePasswordVisibilityChange}>
-        <IconContainer>
+        <IconContainer isFocused={isFocused}>
         <Feather 
             name={isPasswordVisible ? 'eye' : 'eye-off'}
             size={24}
