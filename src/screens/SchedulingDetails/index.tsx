@@ -66,8 +66,8 @@ export function SchedulingDetails(){
 
   async function handleConfirmRental() {
     const schedulesByCar = await api.get(`/schedules_bycars/${car.id}`);
-
     const unavailable_dates = [
+      //@ts-ignore
       ...schedulesByCar.data.unavailable_dates,
       ...dates,
     ];
@@ -83,10 +83,15 @@ export function SchedulingDetails(){
       id: car.id,
       unavailable_dates
     })
-    .then(() => navigation.navigate('SchedulingComplete'))
+    //@ts-ignore
+    .then(() => navigation.navigate('Confirmation', {
+      nextScreenRoute:'Home', // Tela que vai após dar Ok
+      title: 'Carro alugado!', // Título da tela
+      message: `Agora você só precisa ir \naté a concessionária da RENTX \npegar o seu automóvel.`
+    }))
     .catch(() => {
       Alert.alert('Não foi possível confirmar o agendamento.');
-      setLoading(false);
+      setLoading(true);
     })
   }
 

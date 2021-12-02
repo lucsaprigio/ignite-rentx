@@ -42,6 +42,7 @@ export function ImageSlider({imagesUrl}: Props){
         </ImageIndexes>
 
     <FlatList
+        horizontal
         data={imagesUrl}
         keyExtractor={key => key}
         renderItem={({ item }) => (

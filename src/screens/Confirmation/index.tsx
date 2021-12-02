@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { StatusBar, useWindowDimensions } from 'react-native';
 
 import LogoSvg from '../../assets/brand.svg';
@@ -16,13 +16,24 @@ import {
    Footer,
 } from './styles';
 
-export function SchedulingComplete(){
+/* Parâmetros da Rota */
+interface Params {
+  title: string; // Título da tela
+  message: string; // Mensagem da Tela
+  nextScreenRoute: string; // Próxima tela que vai
+}
+
+export function Confirmation({}: Params){
     const { width } = useWindowDimensions();
 
     const navigation = useNavigation();
+    const route = useRoute();
+    /* Recuperamos as informações da tela */
+    const { title, message, nextScreenRoute } = route.params as Params;
 
     function handleConfirm(){
-      navigation.navigate('Home')
+      //@ts-ignore
+      navigation.navigate(nextScreenRoute);
     }
 
   return(
@@ -36,12 +47,10 @@ export function SchedulingComplete(){
 
         <Content>
             <DoneSvg width={80} height={80}/>
-            <Title>Carro alugado!</Title>
+            <Title>{title}</Title>
             
             <Message>
-                Agora você só precisa ir {'\n'}
-                até a concessionária da RENTX {'\n'}
-                pegar seu automóvel
+                {message}
             </Message>
         </Content>
 
