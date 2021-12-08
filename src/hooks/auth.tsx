@@ -59,8 +59,6 @@ function AuthProvider({ children }: AuthProviderProps) {
         api.defaults.headers.authorization = `Bearer ${token}`;
 
         setData({ token, user });
-
-        console.log(response.data);
     }
     // Nosso contexto que vai compartilhar as info com todas as rotas
     return (
