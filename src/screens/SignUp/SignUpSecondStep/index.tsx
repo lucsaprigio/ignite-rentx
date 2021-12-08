@@ -5,11 +5,11 @@ import {
   Keyboard,
   Alert,
 } from 'react-native';
+import { api } from '../../../services/api';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 
-import { Confirmation } from '../../Confirmation';
 import { BackButton } from '../../../components/BackButton';
 import { PasswordInput } from '../../../components/PasswordInput';
 import { Bullet } from '../../../components/Bullet';
@@ -49,7 +49,7 @@ export function SignUpSecondStep(){
   }
 
   /* Função de registro de senha */
-  function handleRegister(){
+  async function handleRegister(){
     if(!password || !passwordConfirm){ // Se não tiver password manda o alerta
       return Alert.alert('Informe a senha e a confirmação dela!')
     }
@@ -58,14 +58,27 @@ export function SignUpSecondStep(){
       return Alert.alert('As senhas não conferem!')
     }
 
-    // Enviar para API e cadastrar
-    //@ts-ignore
-    navigation.navigate('Confirmation', {
-      nextScreenRoute: 'Home',
-      title: 'Conta Criada',
-      message: `Agora é só fazer login \ne aproveitar.`
+    // Enviar para API e cadastra
+    await api.post('/users', {
+      name: user.name,
+      email: user.email,
+      driver_license: user.driverLicense,
+      password
+    })
+    /* Se tudo acima der certo vá para próxima tela */
+    .then(() => {
+      //@ts-ignore
+      navigation.navigate('Confirmation', {
+        nextScreenRoute: 'Home',
+        title: 'Conta Criada',
+        message: `Agora é só fazer login \ne aproveitar.`
     });
-  }
+  })
+  /* Se não cai nesse Alert */
+  .catch(() => {
+    Alert.alert('Opa', 'Não foi possível cadastrar')
+  });
+}
 
   return(
   <KeyboardAvoidingView behavior="position" enabled>

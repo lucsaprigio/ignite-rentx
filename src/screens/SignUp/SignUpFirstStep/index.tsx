@@ -23,6 +23,7 @@ import {
    Form,
    FormTitle,
 } from './styles';
+import { useAuth } from '../../../hooks/auth';
 
 export function SignUpFirstStep(){
   const [name, setName] = useState('');
@@ -30,6 +31,8 @@ export function SignUpFirstStep(){
   const [driverLicense, setDriverLicense] = useState('');
 
   const navigation = useNavigation();
+  const { user } = useAuth();
+  console.log("USUÁRIO AUTENTICADO", user);
 
   /* Retorna a tela */
   function handleBack() {
@@ -52,6 +55,7 @@ export function SignUpFirstStep(){
       const data = {name, email, driverLicense}
       await schema.validate(data); // Aguarda a validação
 
+      //@ts-ignore
       navigation.navigate('SignUpSecondStep', { user: data })
     } catch(error) {
       if(error instanceof Yup.ValidationError){

@@ -9,11 +9,13 @@ import {
 } from "react-native";
 import * as Yup from "yup";
 
+import theme from "../../styles/theme";
+import { useAuth } from '../../hooks/auth';
+
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { PasswordInput } from "../../components/PasswordInput";
 
-import theme from "../../styles/theme";
 
 import { Container, Header, Title, Form, SubTitle, Footer } from "./styles";
 
@@ -22,6 +24,7 @@ export function SignIn() {
   const [password, setPassword] = useState("");
 
   const navigation = useNavigation();
+  const { signIn } = useAuth();
 
   /* Validação */
   async function handleSignIn() {
@@ -37,8 +40,11 @@ export function SignIn() {
   
       // Passamos o nosso estado acima aqui
       await schema.validate({ email, password })
+      Alert.alert('Tudo Certo!')
 
       //Fazer login.
+      signIn({ email, password });
+
     } catch (error){
       if(error instanceof Yup.ValidationError) {
        Alert.alert('Opa', error.message);
@@ -52,6 +58,7 @@ export function SignIn() {
   }
 
   function handleNewAccount() {
+    //@ts-ignore
     navigation.navigate('SignUpFirstStep');
   }
 
