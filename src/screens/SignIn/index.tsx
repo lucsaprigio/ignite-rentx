@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
 import {
   StatusBar,
@@ -15,7 +15,6 @@ import { useAuth } from '../../hooks/auth';
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { PasswordInput } from "../../components/PasswordInput";
-
 
 import { Container, Header, Title, Form, SubTitle, Footer } from "./styles";
 
