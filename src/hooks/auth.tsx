@@ -75,13 +75,17 @@ function AuthProvider({ children }: AuthProviderProps) {
         throw new Error(error);
     }
 }
-
+    // Obtendo os dados do usuário
     useEffect(() => {
         async function loadUserData() {
             const userCollection = database.get<ModelUser>('users');
             const response = await userCollection.query().fetch();
-            console.log('### USUÁRIO LOGADO ###')
-            console.log(response);
+            
+            if(response.length > 0){
+                const userData = response[0]._raw as unknown as User;
+                api.defaults.headers.authorization = `Bearer ${userData.token}`;
+                setData(userData);
+            }
         }
 
         loadUserData()
