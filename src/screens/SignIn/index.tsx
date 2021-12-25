@@ -39,7 +39,6 @@ export function SignIn() {
   
       // Passamos o nosso estado acima aqui
       await schema.validate({ email, password })
-      Alert.alert('Tudo Certo!')
 
       //Fazer login.
       signIn({ email, password });
