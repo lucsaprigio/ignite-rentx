@@ -33,7 +33,7 @@ import {
 } from './styles';
 
 export function Profile(){
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   // Estado que controla os 'Dados' e 'Trocar Senha', se esta ativo ou não
   const [option, setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
   const [avatar, setAvatar] = useState(user.avatar); 
@@ -45,11 +45,6 @@ export function Profile(){
 
   // Função que volta uma tela.
   function handleBack() {
-      navigation.goBack();
-  }
-
-  // Função de Deslogar
-  function handleSignOut() {
       navigation.goBack();
   }
 
@@ -87,11 +82,13 @@ export function Profile(){
                             onPress={handleBack}
                         />
                         <HeaderTitle>Editar Perfil</HeaderTitle>
-                        <LogoutButton onPress={handleSignOut} />
+                        <LogoutButton onPress={signOut}>
                             <Feather 
                                 name="power" size={24} 
                                 color={theme.colors.shape} 
                             />
+                        </LogoutButton> 
+                        
                     </HeaderTop>
 
                     <PhotoContainer>
