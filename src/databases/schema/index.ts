@@ -1,12 +1,14 @@
 import { appSchema } from '@nozbe/watermelondb';
 
 import { userSchema } from './userSchema';
+import { carSchema } from './carSchema';
 
 //Centralização das tabelas para usar em toda a aplicação quando precisar
 const schemas = appSchema({
-    version: 1,
+    version: 2,
     tables: [
-        userSchema
+        userSchema,
+        carSchema
     ]
 });
 
