@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { StatusBar } from 'react-native';
+import { Alert, StatusBar } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 import Logo from '../../assets/logo-screen.svg';
 import { api } from '../../services/api';
@@ -21,6 +22,8 @@ import {
 export function Home(){
   const [cars, setCars] = useState<CarDTO[]>([]); // Armazenar a resposta de API
   const [loading, setLoading] = useState(true)
+
+  const netInfo = useNetInfo();
   const navigation = useNavigation();
 
   function handleCarDetails(car:CarDTO) {
@@ -51,6 +54,15 @@ export function Home(){
       isMounted = false;
     }
   }, []);
+
+  // Quando a conexão mudar, esse useEffect vai ser disparado novamente.
+  useEffect(() => {
+    if(netInfo.isConnected) {
+      Alert.alert('Você está On-line');
+    } else {
+      Alert.alert('Você está Offline');
+    }
+  },[netInfo.isConnected]);
 
   return(
     <Container>
